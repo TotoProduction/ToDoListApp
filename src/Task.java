@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Task implements Serializable {
+    private static final long serialVersionIUD = 1L;
+
     private String name;
     private String description;
     private LocalDate dateAjout;
