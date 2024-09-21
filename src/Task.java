@@ -6,30 +6,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Task implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private String description;
     private LocalDate dateAjout;
     private LocalDate dateFin;
     private Status status;
+    private boolean isFavorite;
 
-    public Task(String name, String description, LocalDate dateAjout, LocalDate dateFin, Status status){
+    public Task(String name, String description, LocalDate dateAjout, LocalDate dateFin, Status status, boolean isFavorite){
         this.name = name;
         this.description = description;
         this.dateAjout = dateAjout;
         this.dateFin = dateFin;
         this.status = status;
+        this.isFavorite = false;
     }
 
     public Task(String name, String description, LocalDate dateFin, Status status){
-        this(name, description, LocalDate.now(), dateFin, status);
+        this(name, description, LocalDate.now(), dateFin, status, false);
     }
 
     public Task(String name, String description){
-        this(name, description, LocalDate.now(), LocalDate.now().plusDays(10), Status.TODO);
+        this(name, description, LocalDate.now(), LocalDate.now().plusDays(10), Status.TODO, false);
     }
 
     public Task(String name){
-        this(name, "Pas de description pour cette tâche", LocalDate.now(), LocalDate.now().plusDays(10), Status.TODO);
+        this(name, "Pas de description pour cette tâche", LocalDate.now(), LocalDate.now().plusDays(10), Status.TODO, false);
     }
 
 
@@ -47,6 +51,10 @@ public class Task implements Serializable {
 
     public void setDateFin(LocalDate date){
         this.dateFin = date;
+    }
+
+    public void setIsFavorite(boolean isFavorite){
+        this.isFavorite = isFavorite;
     }
 
     public String getName() {
@@ -69,8 +77,17 @@ public class Task implements Serializable {
         return this.status;
     }
 
+    public boolean getIsFavorite(){
+        return this.isFavorite;
+    }
+
     public String toString(){
-        return "" + this.status + " : " + this.name + " --> " + this.description + " , expire le " + this.dateFin + ".";
+        String favorite = "";
+        if(this.isFavorite == true){
+            favorite = "★";
+        }
+        return favorite + this.status + " : " + this.name + " --> " + this.description + " , expire le " + this.dateFin + ".";
+
     }
 
     public static void saveTasks(List<Task> tasks){
