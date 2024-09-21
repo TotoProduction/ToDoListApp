@@ -80,6 +80,8 @@ public class ToDoListApp extends Application {
         TextField descriptionTaskInput = new TextField(task.getDescription());
         DatePicker dateTaskInput = new DatePicker(task.getDateFin());
         TextField statusTaskInput = new TextField(task.getStatus().name());
+        CheckBox favoriteCheckbox = new CheckBox("Favori");
+        favoriteCheckbox.setSelected(task.getIsFavorite());
 
         Button saveButton = new Button("Sauvegarder");
         Button deleteButton = new Button("Supprimer");
@@ -90,6 +92,7 @@ public class ToDoListApp extends Application {
             task.setDescription(descriptionTaskInput.getText());
             task.setDateFin(dateTaskInput.getValue());
             task.setStatus(Status.valueOf(statusTaskInput.getText()));
+            task.setIsFavorite(favoriteCheckbox.isSelected());
 
             taskListView.refresh(); //mettre à jour la liste
             Task.saveTasks(new ArrayList<>(taskObservableList));
@@ -103,7 +106,7 @@ public class ToDoListApp extends Application {
         });
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(new Label("Nom"), nameTaskInput, new Label("Description"), descriptionTaskInput, new Label("Date de fin"), dateTaskInput, new Label("Status"), statusTaskInput, saveButton, deleteButton);
+        layout.getChildren().addAll(new Label("Nom"), nameTaskInput, new Label("Description"), descriptionTaskInput, new Label("Date de fin"), dateTaskInput, new Label("Status"), statusTaskInput, favoriteCheckbox, saveButton, deleteButton);
 
         Scene scene = new Scene(layout, 300, 400);
         editStage.setScene(scene);
